@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    private int width;
-    private int height;
-    private Cell[][] grid;
-    private List<Agent> agents;
+    private final int width;
+    private final int height;
+    private final Cell[][] grid;
+    private final List<Agent> agents;
 
     public Board(int width, int height){
         this.width = width;
@@ -31,11 +31,23 @@ public class Board {
 
     public List<Cell> getNeighbors(int x, int y) {
         List<Cell> neighbors = new ArrayList<>();
-        int[][] dirs = {{0,1}, {1,0}, {0,-1}, {-1,0}};
-        for (int[] d : dirs) {
-            Cell c = getCell(x + d[0], y + d[1]);
-            if (c != null) neighbors.add(c);
+        Cell top = getCell(x,y-1);
+        Cell right = getCell(x+1,y);
+        Cell bottom = getCell(x,y+1);
+        Cell left = getCell(x-1,y);  
+        
+        if(top != null){
+            neighbors.add(top);
         }
+        if(right != null){
+            neighbors.add(right);
+        }
+        if(bottom != null){
+            neighbors.add(bottom);
+        }
+        if(left != null){
+            neighbors.add(left);
+        }                        
         return neighbors;
     }
 
@@ -53,10 +65,12 @@ public class Board {
         if(!agents.contains(agent)){
             agents.add(agent);
             Cell c = getCell(agent.getX(), agent.getY());
-            if (c != null) {
-                if (agent instanceof Fire) {
-                    c.setFire((Fire) agent);
-                } else {
+            if(c != null) {
+                if(agent instanceof Fire fire) {
+                    c.setFire(fire);
+                } else if(agent instanceof EvacuationPoint evacuationPoint){
+                    c.setEvacuationPoint(evacuationPoint);
+                } else{
                     c.setPhysicalEntity(agent);
                 }
             }
@@ -67,22 +81,14 @@ public class Board {
         if(agents.contains(agent)){
             agents.remove(agent);
             Cell c = getCell(agent.getX(), agent.getY());
-            if (c != null) {
+            if(c != null) {
                 if (agent instanceof Fire) {
                     c.setFire(null);
+                } else if(agent instanceof EvacuationPoint){
+                    c.setEvacuationPoint(null);
                 } else if (c.getPhysicalEntity() == agent) {
                     c.setPhysicalEntity(null);
-                    restoreStaticEntity(c);
                 }
-            }
-        }
-    }
-
-    public void restoreStaticEntity(Cell cell) {
-        for (Agent a : agents) {
-            if (a instanceof EvacuationPoint && a.getX() == cell.getX() && a.getY() == cell.getY()) {
-                cell.setPhysicalEntity(a);
-                return;
             }
         }
     }

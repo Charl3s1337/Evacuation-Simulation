@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Simulation {
-    private Board board;
+    private final Board board;
     private int stepCount;
     private boolean isRunning;
 
@@ -44,8 +44,8 @@ public class Simulation {
 
         // 3. Sprawdzenie warunku ewakuacji
         for(Agent agent: new ArrayList<>(board.getAgents())){
-            if(agent instanceof Civilian) {
-                ((Civilian) agent).checkEvacuation();
+            if(agent instanceof Civilian civilian) {
+                civilian.checkEvacuation();
             }
         }
 
@@ -58,8 +58,8 @@ public class Simulation {
 
         // 5. Sprawdzenie warunku śmierci
         for(Agent agent: new ArrayList<>(board.getAgents())){
-            if(agent instanceof Civilian) {
-                ((Civilian) agent).checkDeath();
+            if(agent instanceof Civilian civilian) {
+                civilian.checkDeath();
             }
         }
     }

@@ -24,7 +24,7 @@ public class Civilian extends Agent {
             Cell currentCell = board.getCell(x, y);
             Cell nextCell = available.get(random.nextInt(available.size()));
 
-            if (currentCell.getPhysicalEntity() == this) {
+            if (currentCell != null && currentCell.getPhysicalEntity() == this) {
                 currentCell.setPhysicalEntity(null);
             }
 

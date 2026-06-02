@@ -44,6 +44,7 @@ public class Main {
                 }
 
                 Agent entity = cell.getPhysicalEntity();
+                EvacuationPoint point = cell.getEvacuationPoint();
                 boolean isBurning = (cell.getFire() != null);
 
                 if (isBurning) {
@@ -51,13 +52,13 @@ public class Main {
                     else System.out.print("[*]");
                 } else if (entity instanceof Obstacle) {
                     System.out.print("[W]");
-                } else if (entity instanceof EvacuationPoint) {
-                    System.out.print("[E]");
                 } else if (entity instanceof Civilian) {
-                    System.out.print("[C]");
+                    System.out.print("[C]"); 
                 } else if (entity instanceof Firefighter) {
                     System.out.print("[F]");
-                } else {
+                } else if (point != null) {
+                    System.out.print("[E]");
+                }  else {
                     System.out.print("[ ]");
                 }
             }

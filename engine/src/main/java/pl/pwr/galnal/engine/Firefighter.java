@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Firefighter extends Agent {
     private int extinguishedCount;
-    private Random random;
+    private final Random random;
 
     public Firefighter(int x, int y, Board board){
         super(x, y, board);
@@ -15,6 +15,13 @@ public class Firefighter extends Agent {
 
     @Override
     public void step(){
+        Cell currentCell = board.getCell(x, y);
+        if(currentCell != null && currentCell.getFire() != null){
+            board.removeAgent(currentCell.getFire());
+            extinguishedCount++;
+            return;
+        }
+
         List<Cell> neighbors = board.getNeighbors(x, y);
         boolean extinguished = false;
 
@@ -30,12 +37,10 @@ public class Firefighter extends Agent {
         if (!extinguished) {
             List<Cell> available = board.getAvailableNeighbors(x, y);
             if (!available.isEmpty()) {
-                Cell currentCell = board.getCell(x, y);
                 Cell nextCell = available.get(random.nextInt(available.size()));
 
-                if (currentCell.getPhysicalEntity() == this) {
+                if (currentCell != null && currentCell.getPhysicalEntity() == this) {
                     currentCell.setPhysicalEntity(null);
-                    board.restoreStaticEntity(currentCell);
                 }
 
                 this.x = nextCell.getX();

@@ -6,7 +6,7 @@ import java.util.Random;
 public class Civilian extends Agent {
     private CivilianState state;
     private int evacuationTime;
-    private Random random;
+    private final Random random;
 
     public Civilian(int x, int y, Board board){
         super(x, y, board);
@@ -26,7 +26,6 @@ public class Civilian extends Agent {
 
             if (currentCell.getPhysicalEntity() == this) {
                 currentCell.setPhysicalEntity(null);
-                board.restoreStaticEntity(currentCell);
             }
 
             this.x = nextCell.getX();
@@ -39,14 +38,11 @@ public class Civilian extends Agent {
     public void checkEvacuation() {
         if (state != CivilianState.EVACUATING) return;
 
-        // Sprawdzamy, czy na naszej obecnej pozycji istnieje zarejestrowany EvacuationPoint
-        for (Agent a : board.getAgents()) {
-            if (a instanceof EvacuationPoint && a.getX() == this.x && a.getY() == this.y) {
-                this.state = CivilianState.EVACUATED;
-                ((EvacuationPoint) a).incrementSaved();
-                board.removeAgent(this);
-                break;
-            }
+        Cell currentCell = board.getCell(x, y);
+        if(currentCell != null && currentCell.getEvacuationPoint() != null){
+            this.state = CivilianState.EVACUATED;
+            currentCell.getEvacuationPoint().incrementSaved();
+            board.removeAgent(this);
         }
     }
 

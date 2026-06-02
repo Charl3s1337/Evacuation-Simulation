@@ -1,20 +1,23 @@
 package pl.pwr.galnal.engine;
 
 public class Cell {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
     private Agent physicalEntity;
+    private EvacuationPoint evacuationPoint;
     private Fire burning;
 
+    // Konstruktor - domyślnie komórka pusta
     public Cell(int x, int y){
         this.x = x;
         this.y = y;
         this.physicalEntity = null;
+        this.evacuationPoint = null;
         this.burning = null;
     }
 
     public boolean isPassable(){
-        return this.physicalEntity == null || this.physicalEntity instanceof EvacuationPoint;
+        return this.physicalEntity == null;
     }
 
     public void setPhysicalEntity(Agent agent){
@@ -23,6 +26,13 @@ public class Cell {
 
     public Agent getPhysicalEntity() {
         return physicalEntity;
+    }
+    public void setEvacuationPoint(EvacuationPoint point){
+        this.evacuationPoint = point;
+    }
+
+    public EvacuationPoint getEvacuationPoint(){
+        return evacuationPoint;
     }
 
     public void setFire(Fire fire){

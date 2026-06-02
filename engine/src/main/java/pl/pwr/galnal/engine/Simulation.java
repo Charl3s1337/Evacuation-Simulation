@@ -1,5 +1,8 @@
 package pl.pwr.galnal.engine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Simulation {
     private Board board;
     private int stepCount;
@@ -14,7 +17,7 @@ public class Simulation {
     public void run(int steps){
         this.isRunning = true;
         for(int i=0; i<steps; i++){
-            if(isRunning==false){
+            if(!isRunning){
                 break;
             }
             updateBoard();
@@ -23,10 +26,44 @@ public class Simulation {
 
     public void updateBoard(){
         stepCount++;
-        for(Agent agent: board.getAgents()){
-            agent.step();
+        List<Agent> currentAgents = new ArrayList<>(board.getAgents());
+
+        // 1. Strażacy wykonują ruch
+        for(Agent agent: currentAgents){
+            if(agent instanceof Firefighter && board.getAgents().contains(agent)) {
+                agent.step();
+            }
+        }
+
+        // 2. Cywile wykonują ruch
+        for(Agent agent: currentAgents){
+            if(agent instanceof Civilian && board.getAgents().contains(agent)) {
+                agent.step();
+            }
+        }
+
+        // 3. Sprawdzenie warunku ewakuacji
+        for(Agent agent: new ArrayList<>(board.getAgents())){
+            if(agent instanceof Civilian) {
+                ((Civilian) agent).checkEvacuation();
+            }
+        }
+
+        // 4. Ogień próbuje się rozprzestrzenić
+        for(Agent agent: currentAgents){
+            if(agent instanceof Fire && board.getAgents().contains(agent)) {
+                agent.step();
+            }
+        }
+
+        // 5. Sprawdzenie warunku śmierci
+        for(Agent agent: new ArrayList<>(board.getAgents())){
+            if(agent instanceof Civilian) {
+                ((Civilian) agent).checkDeath();
+            }
         }
     }
 
-    public void exportIndicators(){}
+    public void exportIndicators(){
+    }
 }

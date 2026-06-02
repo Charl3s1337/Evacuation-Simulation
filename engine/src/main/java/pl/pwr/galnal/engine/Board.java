@@ -28,16 +28,62 @@ public class Board {
         }
         return null;
     }
-    // public List<Cell> getAvailableNeighbors(int x, int y){}
+
+    public List<Cell> getNeighbors(int x, int y) {
+        List<Cell> neighbors = new ArrayList<>();
+        int[][] dirs = {{0,1}, {1,0}, {0,-1}, {-1,0}};
+        for (int[] d : dirs) {
+            Cell c = getCell(x + d[0], y + d[1]);
+            if (c != null) neighbors.add(c);
+        }
+        return neighbors;
+    }
+
+    public List<Cell> getAvailableNeighbors(int x, int y){
+        List<Cell> available = new ArrayList<>();
+        for (Cell c : getNeighbors(x, y)) {
+            if (c.isPassable()) {
+                available.add(c);
+            }
+        }
+        return available;
+    }
 
     public void addAgent(Agent agent){
         if(!agents.contains(agent)){
             agents.add(agent);
+            Cell c = getCell(agent.getX(), agent.getY());
+            if (c != null) {
+                if (agent instanceof Fire) {
+                    c.setFire((Fire) agent);
+                } else {
+                    c.setPhysicalEntity(agent);
+                }
+            }
         }
     }
+
     public void removeAgent(Agent agent){
         if(agents.contains(agent)){
             agents.remove(agent);
+            Cell c = getCell(agent.getX(), agent.getY());
+            if (c != null) {
+                if (agent instanceof Fire) {
+                    c.setFire(null);
+                } else if (c.getPhysicalEntity() == agent) {
+                    c.setPhysicalEntity(null);
+                    restoreStaticEntity(c);
+                }
+            }
+        }
+    }
+
+    public void restoreStaticEntity(Cell cell) {
+        for (Agent a : agents) {
+            if (a instanceof EvacuationPoint && a.getX() == cell.getX() && a.getY() == cell.getY()) {
+                cell.setPhysicalEntity(a);
+                return;
+            }
         }
     }
 

@@ -12,4 +12,7 @@ public abstract class Agent {
     }
 
     public abstract void step();
+
+    public int getX() { return x; }
+    public int getY() { return y; }
 }

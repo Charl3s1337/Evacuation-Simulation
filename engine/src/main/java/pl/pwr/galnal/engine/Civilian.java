@@ -4,20 +4,20 @@ import java.util.List;
 import java.util.Random;
 
 public class Civilian extends Agent {
-    private String state; // "escaping", "evacuated", "dead"
+    private CivilianState state;
     private int evacuationTime;
     private Random random;
 
     public Civilian(int x, int y, Board board){
         super(x, y, board);
-        this.state = "escaping";
+        this.state = CivilianState.EVACUATING;
         this.evacuationTime = 0;
         this.random = new Random();
     }
 
     @Override
     public void step(){
-        if (!state.equals("escaping")) return;
+        if (state != CivilianState.EVACUATING) return;
 
         List<Cell> available = board.getAvailableNeighbors(x, y);
         if (!available.isEmpty()) {
@@ -32,16 +32,17 @@ public class Civilian extends Agent {
             this.x = nextCell.getX();
             this.y = nextCell.getY();
             nextCell.setPhysicalEntity(this);
+            this.evacuationTime++;
         }
     }
 
     public void checkEvacuation() {
-        if (!state.equals("escaping")) return;
+        if (state != CivilianState.EVACUATING) return;
 
         // Sprawdzamy, czy na naszej obecnej pozycji istnieje zarejestrowany EvacuationPoint
         for (Agent a : board.getAgents()) {
             if (a instanceof EvacuationPoint && a.getX() == this.x && a.getY() == this.y) {
-                this.state = "evacuated";
+                this.state = CivilianState.EVACUATED;
                 ((EvacuationPoint) a).incrementSaved();
                 board.removeAgent(this);
                 break;
@@ -50,13 +51,13 @@ public class Civilian extends Agent {
     }
 
     public void checkDeath() {
-        if (!state.equals("escaping")) return;
+        if (state != CivilianState.EVACUATING) return;
         Cell currentCell = board.getCell(x, y);
         if (currentCell != null && currentCell.getFire() != null) {
-            this.state = "dead";
+            this.state = CivilianState.DEAD;
             board.removeAgent(this);
         }
     }
 
-    public String getState() { return state; }
+    public CivilianState getState() { return state; }
 }

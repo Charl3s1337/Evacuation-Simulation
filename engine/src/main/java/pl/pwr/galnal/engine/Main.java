@@ -5,7 +5,7 @@ public class Main {
         int height = 7;
         Board board = new Board(width, height);
 
-        System.out.println("--- RĘCZNA KONFIGURACJA SYMULACJI ---");
+        System.out.println("SYMULACJA EWAKUACJI Z POZARU");
 
         board.addAgent(new EvacuationPoint(0, 0, board));
         board.addAgent(new EvacuationPoint(6, 6, board));
@@ -22,13 +22,13 @@ public class Main {
         board.addAgent(new Fire(4, 4, board, 0.5));
 
         Simulation simulation = new Simulation(board);
-        int simulationSteps = 5;
+        int simulationSteps = 10;
 
         System.out.println("\nStan poczatkowy (Krok 0):");
         printBoard(board, width, height);
 
         for (int step = 1; step <= simulationSteps; step++) {
-            System.out.println("\n--- KROK SYMULACJI: " + step + " ---");
+            System.out.println("\n- KROK SYMULACJI: " + step + " -");
             simulation.updateBoard();
             printBoard(board, width, height);
         }

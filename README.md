@@ -8,3 +8,9 @@ Aby uruchomić symulację (10 testowych kroków), wpisz w terminalu w głównym 
 
 ```bash
 .\gradlew :engine:run
+ ```
+### Do zrobienia w kolejnym update
+- GUI z ustawianiem i zmianą parametrów
+- Mechanika celowości ruchu agentów (idą do celu)
+- Losowe rozmieszczanie agentów
+- Generowanie statystyk na koniec symulacji

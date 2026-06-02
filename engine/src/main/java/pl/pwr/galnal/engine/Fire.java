@@ -1,12 +1,12 @@
 package pl.pwr.galnal.engine;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.ArrayList;
 
 public class Fire extends Agent {
-    private double spreadProbability;
-    private Random random;
+    private final double spreadProbability;
+    private final Random random;
 
     public Fire(int x, int y, Board board, double spreadProbability){
         super(x, y, board);

@@ -16,17 +16,17 @@ public class Fire extends Agent {
 
     @Override
     public void step(){
-        if (random.nextDouble() < spreadProbability) {
+        if(random.nextDouble() < spreadProbability) {
             List<Cell> neighbors = board.getNeighbors(x, y);
             List<Cell> emptyNeighbors = new ArrayList<>();
 
-            for (Cell c : neighbors) {
-                if (c.getFire() == null && !(c.getPhysicalEntity() instanceof Obstacle)) {
+            for(Cell c : neighbors) {
+                if(c.getFire() == null && !(c.getPhysicalEntity() instanceof Obstacle) && c.getEvacuationPoint() == null) {
                     emptyNeighbors.add(c);
                 }
             }
 
-            if (!emptyNeighbors.isEmpty()) {
+            if(!emptyNeighbors.isEmpty()) {
                 Cell target = emptyNeighbors.get(random.nextInt(emptyNeighbors.size()));
                 Fire newFire = new Fire(target.getX(), target.getY(), board, spreadProbability);
                 board.addAgent(newFire);

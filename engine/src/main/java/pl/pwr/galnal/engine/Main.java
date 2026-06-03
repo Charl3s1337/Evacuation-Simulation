@@ -48,8 +48,11 @@ public class Main {
                 boolean isBurning = (cell.getFire() != null);
 
                 if (isBurning) {
-                    if (entity != null) System.out.print("[!]");
-                    else System.out.print("[*]");
+                    if (entity != null) {
+                        System.out.print("[!]");
+                    } else {
+                        System.out.print("[*]");
+                        }
                 } else if (entity instanceof Obstacle) {
                     System.out.print("[W]");
                 } else if (entity instanceof Civilian) {

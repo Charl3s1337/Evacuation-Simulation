@@ -24,7 +24,7 @@ public class Fire extends Agent {
             List<Cell> emptyNeighbors = new ArrayList<>();
 
             for (Cell c : neighbors) {
-                if (c.getFire() == null && !(c.getPhysicalEntity() instanceof Obstacle)) {
+                if (c.getFire() == null && !(c.getPhysicalEntity() instanceof Obstacle) && c.getEvacuationPoint() == null) {
                     emptyNeighbors.add(c);
                 }
             }

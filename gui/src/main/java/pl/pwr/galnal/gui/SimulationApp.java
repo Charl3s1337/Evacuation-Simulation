@@ -1,12 +1,13 @@
 package pl.pwr.galnal.gui;
 
+import pl.pwr.galnal.engine.SimulationFactory;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import pl.pwr.galnal.engine.Simulation;
 import pl.pwr.galnal.engine.agents.Civilian;
 import pl.pwr.galnal.engine.agents.Fire;
@@ -23,9 +24,14 @@ public class SimulationApp extends Application {
     public void start(Stage primaryStage) {
         boardRenderer = new BoardRender();
 
-        timeline = new Timeline(new KeyFrame(Duration.millis(300), e -> performStep()));
+        timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         controlPanel = new ControlPanel(this::generateSimulation, this::startSimulation, this::stopSimulation);
+
+        updateTimelineSpeed(controlPanel.speedProperty().get());
+        controlPanel.speedProperty().addListener((obs, oldVal, newVal) -> {
+            updateTimelineSpeed(newVal.doubleValue());
+        });
 
         BorderPane root = new BorderPane();
         root.setCenter(boardRenderer);
@@ -92,6 +98,15 @@ public class SimulationApp extends Application {
             stopSimulation();
             System.out.println("Symulacja zatrzymana. Powód: " +
                     (!isFirePresent ? "brak pożaru." : "brak cywilów."));
+        }
+    }
+    private void updateTimelineSpeed(double time){
+        boolean isRunning = (timeline.getStatus() == Animation.Status.RUNNING);
+        timeline.stop();
+        timeline.getKeyFrames().clear();
+        timeline.getKeyFrames().add(new KeyFrame(javafx.util.Duration.millis(time), e -> performStep()));
+        if(isRunning){
+            timeline.play();
         }
     }
 }

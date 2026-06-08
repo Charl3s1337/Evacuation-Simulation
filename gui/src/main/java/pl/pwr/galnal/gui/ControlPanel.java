@@ -27,7 +27,7 @@ public class ControlPanel extends VBox {
         heightSlider = createSlider(5, 50, 15, true, 10);
         civSlider = createSlider(0, 100, 10, true, 10);
         fireSlider = createSlider(0, 30, 2, true, 10);
-        firefighterSlider = createSlider(0, 10, 2, true, 10);
+        firefighterSlider = createSlider(0, 20, 2, true, 10);
         fireChanceSlider = createSlider(0.0, 1.0, 0.5, false, 0.2);
         evacPointSlider = createSlider(1, 20, 2, true, 10);
 
@@ -92,7 +92,6 @@ private Slider createSlider(double min, double max, double defaultVal, boolean i
         return box;
     }
 
-    // Bezpieczne gettery do wyciągania wartości przez główną aplikację
     public int getBoardWidth() { return (int) widthSlider.getValue(); }
     public int getBoardHeight() { return (int) heightSlider.getValue(); }
     public int getCivCount() { return (int) civSlider.getValue(); }

@@ -2,14 +2,14 @@ package pl.pwr.galnal.gui;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.util.Duration;
-import pl.pwr.galnal.engine.agents.Civilian;
-import pl.pwr.galnal.engine.agents.Fire;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import pl.pwr.galnal.engine.Simulation;
+import pl.pwr.galnal.engine.agents.Civilian;
+import pl.pwr.galnal.engine.agents.Fire;
 
 public class SimulationApp extends Application {
 
@@ -31,12 +31,15 @@ public class SimulationApp extends Application {
         root.setCenter(boardRenderer);
         root.setRight(controlPanel);
 
-        Scene scene = new Scene(root, 900, 600);
-        primaryStage.setTitle("Symulacja Ewakuacji - Architektura SRP");
+        Scene scene = new Scene(root, 1100, 850);
+        primaryStage.setTitle("Symulacja Ewakuacji");
         primaryStage.setScene(scene);
+
+        primaryStage.setMinWidth(900);
+        primaryStage.setMinHeight(600);
         primaryStage.show();
 
-        generateSimulation(); // Inicjalne wygenerowanie
+        generateSimulation();
     }
 
     private void generateSimulation() {

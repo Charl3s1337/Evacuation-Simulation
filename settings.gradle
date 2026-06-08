@@ -1,2 +1,3 @@
 rootProject.name = "Evacuation Simulation"
 include 'engine'
+include 'gui'

@@ -1,4 +1,12 @@
 package pl.pwr.galnal.engine;
+
+import pl.pwr.galnal.engine.agents.Agent;
+import pl.pwr.galnal.engine.agents.Civilian;
+import pl.pwr.galnal.engine.agents.EvacuationPoint;
+import pl.pwr.galnal.engine.agents.Fire;
+import pl.pwr.galnal.engine.agents.Firefighter;
+import pl.pwr.galnal.engine.agents.Obstacle;
+
 public class Main {
     public static void main(String[] args) {
         int width = 7;

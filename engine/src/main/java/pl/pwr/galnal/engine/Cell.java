@@ -1,5 +1,9 @@
 package pl.pwr.galnal.engine;
 
+import pl.pwr.galnal.engine.agents.Agent;
+import pl.pwr.galnal.engine.agents.EvacuationPoint;
+import pl.pwr.galnal.engine.agents.Fire;
+
 public class Cell {
     private final int x;
     private final int y;

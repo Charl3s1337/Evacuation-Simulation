@@ -3,6 +3,10 @@ package pl.pwr.galnal.engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.pwr.galnal.engine.agents.Agent;
+import pl.pwr.galnal.engine.agents.EvacuationPoint;
+import pl.pwr.galnal.engine.agents.Fire;
+
 public class Board {
     private final int width;
     private final int height;
@@ -95,5 +99,13 @@ public class Board {
 
     public List<Agent> getAgents(){
         return agents;
+    }
+
+    public int getWidth(){
+        return width;
+    }
+    
+    public int getHeight(){
+        return height;
     }
 }

@@ -3,6 +3,11 @@ package pl.pwr.galnal.engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.pwr.galnal.engine.agents.Agent;
+import pl.pwr.galnal.engine.agents.Civilian;
+import pl.pwr.galnal.engine.agents.Fire;
+import pl.pwr.galnal.engine.agents.Firefighter;
+
 public class Simulation {
     private final Board board;
     private int stepCount;
@@ -65,5 +70,8 @@ public class Simulation {
     }
 
     public void exportIndicators(){
+    }
+    public Board getBoard(){
+        return board;
     }
 }

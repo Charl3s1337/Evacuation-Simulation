@@ -1,5 +1,10 @@
 package pl.pwr.galnal.gui;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+import pl.pwr.galnal.engine.agents.Civilian;
+import pl.pwr.galnal.engine.agents.Fire;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -12,13 +17,15 @@ public class SimulationApp extends Application {
     private ControlPanel controlPanel;
     private BoardRender boardRenderer;
     private final SimulationFactory factory = new SimulationFactory();
+    private Timeline timeline;
 
     @Override
     public void start(Stage primaryStage) {
         boardRenderer = new BoardRender();
-        
-        // Przekazujemy do panelu instrukcje, co ma się stać po kliknięciu przycisków
-        controlPanel = new ControlPanel(this::generateSimulation, this::performStep);
+
+        timeline = new Timeline(new KeyFrame(Duration.millis(300), e -> performStep()));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        controlPanel = new ControlPanel(this::generateSimulation, this::startSimulation, this::stopSimulation);
 
         BorderPane root = new BorderPane();
         root.setCenter(boardRenderer);
@@ -33,6 +40,7 @@ public class SimulationApp extends Application {
     }
 
     private void generateSimulation() {
+        stopSimulation();
         simulation = factory.createSimulation(
                 controlPanel.getBoardWidth(),
                 controlPanel.getBoardHeight(),
@@ -45,10 +53,42 @@ public class SimulationApp extends Application {
         boardRenderer.draw(simulation.getBoard());
     }
 
+    private void startSimulation() {
+        if (simulation != null) {
+            timeline.play();
+        }
+    }
+
+    private void stopSimulation() {
+        if (timeline != null) {
+            timeline.stop();
+        }
+    }
+
     private void performStep() {
         if (simulation != null) {
             simulation.updateBoard();
             boardRenderer.draw(simulation.getBoard());
+            checkEndConditions();
+        }
+    }
+
+    private void checkEndConditions() {
+        boolean isFirePresent = false;
+        boolean isCivilianPresent = false;
+
+        for (Object agent : simulation.getBoard().getAgents()) {
+            if (agent instanceof Fire) {
+                isFirePresent = true;
+            } else if (agent instanceof Civilian) {
+                isCivilianPresent = true;
+            }
+        }
+
+        if (!isFirePresent || !isCivilianPresent) {
+            stopSimulation();
+            System.out.println("Symulacja zatrzymana. Powód: " +
+                    (!isFirePresent ? "brak pożaru." : "brak cywilów."));
         }
     }
 }

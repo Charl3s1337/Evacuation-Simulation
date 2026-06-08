@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class ControlPanel extends VBox {
@@ -16,7 +17,7 @@ public class ControlPanel extends VBox {
     private final Slider fireChanceSlider;
     private final Slider evacPointSlider;
 
-    public ControlPanel(Runnable onGenerate, Runnable onStep) {
+    public ControlPanel(Runnable onGenerate, Runnable onStart, Runnable onStop) {
         setSpacing(10);
         setPadding(new Insets(15));
         setStyle("-fx-background-color: #f4f4f4; -fx-border-color: #cccccc; -fx-border-width: 0 0 0 1;");
@@ -35,9 +36,17 @@ public class ControlPanel extends VBox {
         generateBtn.setStyle("-fx-font-weight: bold; -fx-base: #e0e0e0;");
         generateBtn.setOnAction(e -> onGenerate.run());
 
-        Button stepButton = new Button("Następny krok (Tick)");
-        stepButton.setMaxWidth(Double.MAX_VALUE);
-        stepButton.setOnAction(e -> onStep.run());
+        Button startButton = new Button("Start");
+        startButton.setMaxWidth(Double.MAX_VALUE);
+        startButton.setStyle("-fx-base: #a4c639; -fx-font-weight: bold;");
+        startButton.setOnAction(e -> onStart.run());
+
+        Button stopButton = new Button("Stop");
+        stopButton.setMaxWidth(Double.MAX_VALUE);
+        stopButton.setStyle("-fx-base: #ff6b6b; -fx-font-weight: bold;");
+        stopButton.setOnAction(e -> onStop.run());
+
+        HBox playbackControls = new HBox(10, startButton, stopButton);
 
         getChildren().addAll(
                 new Label("WYMIARY PLANSZY"),
@@ -51,7 +60,7 @@ public class ControlPanel extends VBox {
                 new Label("FIZYKA POŻARU"),
                 buildSliderBox("Szansa rozprzestrzeniania", fireChanceSlider, false),
                 generateBtn,
-                stepButton
+                playbackControls
         );
     }
 

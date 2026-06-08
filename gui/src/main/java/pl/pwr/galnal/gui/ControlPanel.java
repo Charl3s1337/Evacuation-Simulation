@@ -64,10 +64,17 @@ public class ControlPanel extends VBox {
         );
     }
 
-    private Slider createSlider(double min, double max, double defaultVal, boolean isInteger, double tickUnit) {
+private Slider createSlider(double min, double max, double defaultVal, boolean isInteger, double tickUnit) {
         Slider slider = new Slider(min, max, defaultVal);
         slider.setMajorTickUnit(tickUnit);
-        slider.setMinorTickCount(isInteger ? 4 : 1);
+        
+        // Poprawne ustawianie slidera nieważne od pozycji
+        if (isInteger) {
+            slider.setMinorTickCount((int) tickUnit - 1); 
+        } else {
+            slider.setMinorTickCount(4); 
+        }
+        
         slider.setSnapToTicks(isInteger);
         slider.setShowTickMarks(true);
         slider.setShowTickLabels(true);

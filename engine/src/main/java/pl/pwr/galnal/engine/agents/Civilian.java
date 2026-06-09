@@ -8,13 +8,11 @@ import pl.pwr.galnal.engine.Cell;
 
 public class Civilian extends Agent {
     private CivilianState state;
-    private int evacuationTime;
     private final Random random;
 
     public Civilian(int x, int y, Board board){
         super(x, y, board);
         this.state = CivilianState.EVACUATING;
-        this.evacuationTime = 0;
         this.random = new Random();
     }
 
@@ -34,7 +32,6 @@ public class Civilian extends Agent {
             this.x = nextCell.getX();
             this.y = nextCell.getY();
             nextCell.setPhysicalEntity(this);
-            this.evacuationTime++;
         }
     }
 
@@ -45,6 +42,7 @@ public class Civilian extends Agent {
         if(currentCell != null && currentCell.getEvacuationPoint() != null){
             this.state = CivilianState.EVACUATED;
             currentCell.getEvacuationPoint().incrementSaved();
+            board.incSaved();
             board.removeAgent(this);
         }
     }
@@ -54,9 +52,12 @@ public class Civilian extends Agent {
         Cell currentCell = board.getCell(x, y);
         if (currentCell != null && currentCell.getFire() != null) {
             this.state = CivilianState.DEAD;
+            board.incDead();
             board.removeAgent(this);
         }
     }
 
-    public CivilianState getState() { return state; }
+    public CivilianState getState() { 
+        return state; 
+    }
 }

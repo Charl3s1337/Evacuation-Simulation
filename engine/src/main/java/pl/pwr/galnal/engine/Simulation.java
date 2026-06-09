@@ -11,25 +11,18 @@ import pl.pwr.galnal.engine.agents.Firefighter;
 public class Simulation {
     private final Board board;
     private int stepCount;
-    private boolean isRunning;
+    private boolean finished = false;
+    private String endCause = "";
 
     public Simulation(Board board){
         this.board = board;
         this.stepCount = 0;
-        this.isRunning = false;
-    }
-
-    public void run(int steps){
-        this.isRunning = true;
-        for(int i=0; i<steps; i++){
-            if(!isRunning){
-                break;
-            }
-            updateBoard();
-        }
     }
 
     public void updateBoard(){
+        if(finished){
+            return;
+        }
         stepCount++;
         List<Agent> currentAgents = new ArrayList<>(board.getAgents());
 
@@ -67,11 +60,35 @@ public class Simulation {
                 civilian.checkDeath();
             }
         }
+        boolean isFirePresent = false;
+        boolean isCivPresent = false;
+
+        for(Agent a: board.getAgents()){
+            if(a instanceof Fire){
+                isFirePresent = true;
+            } else if(a instanceof Civilian){
+                isCivPresent = true;
+            }
+        }
+         if(!isFirePresent){
+            finished = true;
+            endCause = "Brak ognisk pożaru.";
+         } else if(!isCivPresent){
+            finished = true;
+            endCause = "Brak cywilów na planszy.";
+         }
     }
 
-    public void exportIndicators(){
-    }
     public Board getBoard(){
         return board;
+    }
+    public int getStepCount(){
+        return stepCount;
+    }
+    public boolean isFinished(){
+        return finished;
+    }
+    public String getEndCause(){
+        return endCause;
     }
 }

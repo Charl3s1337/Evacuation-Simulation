@@ -22,6 +22,7 @@ public class Firefighter extends Agent {
         if(currentCell != null && currentCell.getFire() != null){
             board.removeAgent(currentCell.getFire());
             extinguishedCount++;
+            board.incExtinguished();
             return;
         }
 
@@ -32,6 +33,7 @@ public class Firefighter extends Agent {
             if (neighbor.getFire() != null) {
                 board.removeAgent(neighbor.getFire());
                 extinguishedCount++;
+                board.incExtinguished();
                 extinguished = true;
                 break;
             }
@@ -51,5 +53,8 @@ public class Firefighter extends Agent {
                 nextCell.setPhysicalEntity(this);
             }
         }
+    }
+    public int getExtinguishedCount(){
+        return extinguishedCount;
     }
 }

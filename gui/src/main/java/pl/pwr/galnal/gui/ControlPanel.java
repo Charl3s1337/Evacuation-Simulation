@@ -21,8 +21,8 @@ public class ControlPanel extends VBox {
     private final Slider speedSlider;
 
     public ControlPanel(Runnable onGenerate, Runnable onStart, Runnable onStop) {
-        setSpacing(10);
-        setPadding(new Insets(15));
+        setSpacing(7);
+        setPadding(new Insets(10));
         setStyle("-fx-background-color: #f4f4f4; -fx-border-color: #cccccc; -fx-border-width: 0 0 0 1;");
         setPrefWidth(250);
 

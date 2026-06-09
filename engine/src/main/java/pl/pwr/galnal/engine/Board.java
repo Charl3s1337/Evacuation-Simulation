@@ -12,6 +12,9 @@ public class Board {
     private final int height;
     private final Cell[][] grid;
     private final List<Agent> agents;
+    private int deadCivilians = 0;
+    private int savedCivilians = 0;
+    private int extinguishedFires = 0;
 
     public Board(int width, int height){
         this.width = width;
@@ -97,6 +100,18 @@ public class Board {
         }
     }
 
+    public void incDead(){
+        deadCivilians++;
+    }
+
+    public void incSaved(){
+        savedCivilians++;
+    }
+
+    public void incExtinguished(){
+        extinguishedFires++;
+    }
+
     public List<Agent> getAgents(){
         return agents;
     }
@@ -107,5 +122,17 @@ public class Board {
     
     public int getHeight(){
         return height;
+    }
+
+    public int getDeadCiv(){
+        return deadCivilians;
+    }
+
+    public int getSavedCiv(){
+        return savedCivilians;
+    }
+
+    public int getExtinguished(){
+        return extinguishedFires;
     }
 }

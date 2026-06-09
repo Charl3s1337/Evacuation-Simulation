@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'application'
 }
 
 group = 'pl.pwr.galnal'
@@ -8,8 +7,4 @@ version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
-}
-
-application{
-    mainClass = "pl.pwr.galnal.engine.Main"
 }

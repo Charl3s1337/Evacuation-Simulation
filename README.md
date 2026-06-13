@@ -60,3 +60,11 @@ Projekt stanowi fundament symulacyjny gotowy na dalszą rozbudowę w kilku kieru
   * Wprowadzenie rozróżnienia palności materiałów, co skutkowałoby różnymi efektami trawienia przestrzeni przez ogień.
 * **Narzędzia edytorskie:**
   * Opracowanie trybu ręcznego tworzenia planszy, umożliwiającego symulowanie pożarów w odwzorowanych, istniejących obiektach (np. konkretnej sali wykładowej).
+
+## 📄 Prawa autorskie i licencje graficzne
+W warstwie graficznej wykorzystano darmowe zasoby z serwisu Flaticon. Zgodnie z wymogami licencji twórców (*Attribution Required*), poniżej znajduje się lista wykorzystanych elementów:
+* Ikona przeszkody (ściana): autorstwa **Freepik** z [Flaticon](https://www.flaticon.com/free-icon/wall_8568554)
+* Ikona strażaka: autorstwa **IconBaandar** z [Flaticon](https://www.flaticon.com/free-icon/spray_14821399)
+* Ikona cywila: autorstwa **Prosymbols Premium** z [Flaticon](https://www.flaticon.com/free-icon/man_9567040)
+* Ikona ognia: autorstwa **Freepik** z [Flaticon](https://www.flaticon.com/free-icon/fire_599502)
+* Ikona wyjścia ewakuacyjnego: autorstwa **Freepik** z [Flaticon](https://www.flaticon.com/free-icon/exit_3249033)

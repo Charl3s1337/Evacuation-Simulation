@@ -6,6 +6,20 @@ build/
 # Java / IDE
 *.class
 *.jar
+!gradle/wrapper/gradle-wrapper.jar
 .vscode/
 bin/
 out/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Wygenerowane raporty i logi
+*.csv
+*.log
+
+# Pliki systemowe
+Thumbs.db
+.DS_Store
